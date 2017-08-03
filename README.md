@@ -2,7 +2,7 @@
 A library of ftp client on Linux
 
 ## Demo
-![](./master/demo.png)
+![](https://raw.githubusercontent.com/hubenchang0515/libftpclient/master/demo.png)
 
 ## APIs
 ```C
