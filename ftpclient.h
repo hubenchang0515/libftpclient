@@ -10,8 +10,8 @@
 
 ssize_t ftpTryRead(int fd,void* buffer,size_t bytes);
 ssize_t ftpTryWrite(int fd,const void* buffer,size_t bytes);
-void ftpClose(int sock);
 int ftpConnect(const char* ipv4,uint16_t port);
+void ftpClose(int sock);
 int ftpCreateControlConnection(const char* ipv4,uint16_t port);
 int ftpCreateDataConnection(int sock);
 int ftpLogin(int sock,const char* username,const char* password);

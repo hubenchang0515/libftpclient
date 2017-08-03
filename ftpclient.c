@@ -23,7 +23,7 @@
 
 /*
  * TODO
- *  Try to read file
+ *  Try to read file , 1s timeout
  *
  * PARAM
  *  fd     : file descriptor
@@ -60,7 +60,7 @@ ssize_t ftpTryRead(int fd,void* buffer,size_t bytes)
 
 /*
  * TODO
- *  Try to write file
+ *  Try to write file , 1s timeout
  *
  * PARAM
  *  fd     : file descriptor
@@ -152,7 +152,7 @@ void ftpClose(int sock)
 
 /*
  * TODO
- *  Initialize FTP control connection 
+ *  Create FTP control connection 
  *
  * PARAM
  *  ipv4 : the ipv4 address of ftp server
@@ -184,7 +184,7 @@ int ftpCreateControlConnection(const char* ipv4,uint16_t port)
 
 /*
  * TODO
- *  Initialize FTP data connection 
+ *  Create FTP data connection 
  *
  * PARAM
  *  sock     : socket of ftp control connection
@@ -323,24 +323,6 @@ int ftpChangeDirectory(int sock,const char* path)
         return 1;
     }
 }
-
-
-
-
-/*
- * TODO
- *  Read server file list
- *
- * PARAM
- *  sock : socket of ftp control connection
- *  path : path to change to
- *
- * RETURN
- *  succedd : 1
- *  failed  : 0
- *
- */
-//int ftpFileList(int csock,int dsock,char* files[],size_t count);
 
 
 
