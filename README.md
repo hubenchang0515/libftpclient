@@ -209,6 +209,22 @@ int ftpChangeDirectory(int csock,const char* path);
 
 
 
+/*
+ * TODO
+ *  Remove FTP server file
+ *
+ * PARAM
+ *  csock : socket of ftp control connection
+ *  file : file to remove
+ *
+ * RETURN
+ *  succedd : 1
+ *  failed  : 0
+ *
+ */
+int ftpRemove(int csock,const char* file);
+
+
 
 /*
  * TODO

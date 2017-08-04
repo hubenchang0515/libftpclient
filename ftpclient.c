@@ -447,6 +447,34 @@ int ftpChangeDirectory(int csock,const char* path)
 }
 
 
+/*
+ * TODO
+ *  Remove FTP server file
+ *
+ * PARAM
+ *  csock : socket of ftp control connection
+ *  file : file to remove
+ *
+ * RETURN
+ *  succedd : 1
+ *  failed  : 0
+ *
+ */
+int ftpRemove(int csock,const char* file)
+{
+    if(
+        ftpTryWrite(csock,"CWD ",4) <= 0 ||
+        ftpTryWrite(csock,file,strlen(file)) <=0 ||
+        ftpTryWrite(csock,"\r\n",2) <= 0
+    )
+    {
+        return 0;
+    }
+    else
+    {
+        return 1;
+    }
+}
 
 
 /*

@@ -30,6 +30,8 @@ int ftpLogin(int sock,const char* username,const char* password);
 
 int ftpChangeDirectory(int sock,const char* path);
 
+int ftpRemove(int csock,const char* file);
+
 int ftpTellDownload(int csock,const char* file);
 
 int ftpTellUpload(int csock,const char* file);
