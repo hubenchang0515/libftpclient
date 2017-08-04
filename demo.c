@@ -61,16 +61,17 @@ void help()
 }
 
 /* print file list */
-void list(int sock)
+void list(int csock)
 { 
-    int dsock = ftpCreateDataConnection(sock);
-    ftpTryWrite(sock,"LIST\r\n",6);
+    int socklisten = ftpPort(csock);
+    ftpTryWrite(csock,"LIST\r\n",6);
+    int dsock = ftpAccept(socklisten);
     
     char buffer[1024];
     ssize_t len = 0;
     
     /* 开始传输文件列表 */
-    //len = ftpTryRead(sock,buffer,1024);
+    //len = ftpTryRead(csock,buffer,1024);
     //write(STDOUT_FILENO,buffer,len);
     
     /* 打印文件列表 */
@@ -81,14 +82,14 @@ void list(int sock)
     }while(len > 0);
     
     /* 文件列表传输完毕 */
-    //len = ftpTryRead(sock,buffer,1024);
+    //len = ftpTryRead(csock,buffer,1024);
     //write(STDOUT_FILENO,buffer,len);
     
     close(dsock);
 }
 
 /* call function by coomand */
-void command(int sock,const char* cmd)
+void command(int csock,const char* cmd)
 {
     /* get param */
     char* param = strstr(cmd," ");
@@ -99,7 +100,7 @@ void command(int sock,const char* cmd)
     
     if(!strncmp(cmd,"quit",4))
     {
-        ftpClose(sock);
+        ftpClose(csock);
         exit(0);
     }
     else if(!strncmp(cmd,"help",4))
@@ -108,17 +109,18 @@ void command(int sock,const char* cmd)
     }
     else if(!strncmp(cmd,"list",4))
     {
-        list(sock);
+        list(csock);
     }
     else if(!strncmp(cmd,"cd",2))
     {
-        ftpChangeDirectory(sock,param);
+        ftpChangeDirectory(csock,param);
     }
     else if(!strncmp(cmd,"get",3))
     {
-        int dsock;
-        dsock = ftpCreateDataConnection(sock);
-        if(dsock < 0 || !ftpDownload(sock,dsock,param))
+        int socklisten = ftpPort(csock);
+        ftpTellDownload(csock,param);
+        int dsock = ftpAccept(socklisten);
+        if(dsock < 0 || !ftpDownload(dsock,param))
         {
             printf("Download failed.\n");
             return;
@@ -126,9 +128,10 @@ void command(int sock,const char* cmd)
     }
     else if(!strncmp(cmd,"put",3))
     {
-        int dsock;
-        dsock = ftpCreateDataConnection(sock);
-        if(dsock < 0 || !ftpUpload(sock,dsock,param))
+        int socklisten = ftpPort(csock);
+        ftpTellUpload(csock,param);
+        int dsock = ftpAccept(socklisten);
+        if(dsock < 0 || !ftpUpload(dsock,param))
         {
             printf("Upload failed.\n");
             return;
@@ -165,7 +168,7 @@ int main(void)
         
         /* timeout */
         waitTime.tv_sec  = 0;
-        waitTime.tv_usec = 100000;
+        waitTime.tv_usec = 500000;
 
         
         int state = select(csock + 1, &rfds, NULL,NULL,timeout);
