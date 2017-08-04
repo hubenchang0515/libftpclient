@@ -13,7 +13,7 @@ ftpDownload(dsock,"file.txt");
 ```
 
 ## PASV Example
-```
+```C
 int dsock = ftpCreateDataConnection(csock);
 ftpTellDownload(csock,"./dir/file.txt");
 ftpDownload(dsock,"file.txt");
