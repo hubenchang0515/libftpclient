@@ -8,6 +8,10 @@
 #ifndef FTP_CLIENT_H
 #define FTP_CLIENT_H
 
+#include <unistd.h>
+#include <stddef.h>
+#include <stdint.h>
+
 void ftpClearSocket(int sock);
 
 ssize_t ftpTryRead(int fd,void* buffer,size_t bytes);
@@ -40,6 +44,6 @@ int ftpDownload(int dsock,const char* file);
 
 int ftpUpload(int dsock,const char* file);
 
-#endif FTP_CLIENT_H
+#endif // FTP_CLIENT_H
 
 
