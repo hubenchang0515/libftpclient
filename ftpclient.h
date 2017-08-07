@@ -40,6 +40,6 @@ int ftpDownload(int dsock,const char* file);
 
 int ftpUpload(int dsock,const char* file);
 
-#endif
+#endif FTP_CLIENT_H
 
 
